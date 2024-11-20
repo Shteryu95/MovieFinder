@@ -20,8 +20,8 @@ class Rating(models.Model):
         related_name='user_rating'
     )
 
-    movie = models.ForeignKey(
-        Movie,
+    to_movie = models.ForeignKey(
+        to=Movie,
         on_delete=CASCADE,
         related_name='movie_rating'
     )
@@ -32,18 +32,23 @@ class Rating(models.Model):
 
 
 class Comment(models.Model):
-    user = models.ForeignKey(
-        CustomUser,
-        on_delete=CASCADE,
-        related_name='user_comment'
-    )
-
-    movie = models.ForeignKey(
-        Movie,
-        on_delete=CASCADE,
-        related_name='movie_comment'
+    text = models.TextField(
+        max_length=300,
+        null=True,
+        blank=True,
     )
 
     created_at = models.DateTimeField(
         auto_now_add=True,
     )
+
+    to_movie = models.ForeignKey(
+        to=Movie,
+        on_delete=models.CASCADE,
+    )
+
+    user = models.ForeignKey(
+        to=CustomUser,
+        on_delete=models.CASCADE,
+    )
+

@@ -1,4 +1,7 @@
 from django.db import models
+from django.db.models import CASCADE
+
+from MovieFinder.accounts.models import CustomUser
 
 
 class Movie(models.Model):
@@ -33,8 +36,15 @@ class Movie(models.Model):
 
     poster = models.URLField()
 
-    awards = models.TextField()
+    awards = models.CharField(
+        max_length=100,
+    )
 
     resume = models.TextField(
         max_length=300,
+    )
+
+    user = models.ForeignKey(
+        CustomUser,
+        on_delete=CASCADE,
     )

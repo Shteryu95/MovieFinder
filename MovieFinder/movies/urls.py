@@ -1,7 +1,7 @@
 from django.urls import path
 
-# patterns = [
-#     path('details/', ),
-#     path('edit/', ),
-#     path('delete/', ),
-# ]
+from MovieFinder.movies import views
+
+urlpatterns = [
+    path('create/', views.MovieCreateView.as_view(), name='movie-create')
+]

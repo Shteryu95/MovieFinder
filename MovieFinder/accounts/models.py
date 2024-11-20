@@ -17,6 +17,24 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         unique=True
     )
 
+    first_name = models.CharField(
+        max_length=20,
+        null=True,
+        blank=True,
+    )
+
+    last_name = models.CharField(
+        max_length=20,
+        null=True,
+        blank=True,
+    )
+
+    age = models.IntegerField(
+        validators=[MinValueValidator(0), MaxValueValidator(100)],
+        null=True,
+        blank=True,
+    )
+
     is_active = models.BooleanField(
         default=True,
     )
@@ -32,23 +50,27 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     objects = CustomUserManager()
 
 
-class Profile(models.Model):
-    user = models.OneToOneField(
-        CustomUser,
-        on_delete=CASCADE,
-        primary_key=True,
-    )
-
-    first_name = models.CharField(
-        max_length=20,
-    )
-
-    last_name = models.CharField(
-        max_length=20,
-    )
-
-    age = models.IntegerField(
-        validators=[MinValueValidator(0), MaxValueValidator(100)],
-        null=True,
-        blank=True,
-    )
+# class Profile(models.Model):
+#     user = models.OneToOneField(
+#         CustomUser,
+#         on_delete=CASCADE,
+#         primary_key=True,
+#     )
+#
+#     first_name = models.CharField(
+#         max_length=20,
+#         null=True,
+#         blank=True,
+#     )
+#
+#     last_name = models.CharField(
+#         max_length=20,
+#         null=True,
+#         blank=True,
+#     )
+#
+#     age = models.IntegerField(
+#         validators=[MinValueValidator(0), MaxValueValidator(100)],
+#         null=True,
+#         blank=True,
+#     )
