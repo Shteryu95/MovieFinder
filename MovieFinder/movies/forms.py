@@ -22,7 +22,6 @@ class MovieBaseForm(forms.ModelForm):
         }
 
 
-
 class CreateMovie(MovieBaseForm):
     pass
 

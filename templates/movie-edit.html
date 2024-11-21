@@ -1,4 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    
+    <h2>Edit Movie Information</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Edit</button>
+    </form>
+    
 {% endblock %}
