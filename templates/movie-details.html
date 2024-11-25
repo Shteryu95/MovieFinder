@@ -1,17 +1,36 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    
-    <h2>Movie Information</h2>
-    <img src="{{ movie.poster }}" alt="">
-    <h2>{{ movie.name }}</h2>
-    <h3>{{ movie.genre }}</h3>
-    <p>{{ movie.released_date }}</p>
-    <p>{{ movie.awards }}</p>
-    <p>{{ movie.resume }}</p>
-    {% if request.user == movie.user %}
-    <a href="{% url 'movie-edit' movie.pk %}">Edit</a>
-    <a href="">Delete</a>
+    <div style="margin-right: 500px; margin-top: 40px;">
+        <h2>Movie Information</h2>
+        <img src="{{ movie.poster }}" alt="" style="max-width: 600px; max-height: 600px; width: auto; height: auto;">
+        <h2>{{ movie.name }}</h2>
+        <h3>{{ movie.genre }}</h3>
+        <p>{{ movie.released_date }}</p>
+        <p>{{ movie.awards }}</p>
+        <p>{{ movie.resume }}</p>
+        {% if request.user == movie.user %}
+            <a href="{% url 'movie-edit' movie.pk %}">Edit</a>
+            <a href="">Delete</a>
+        {% endif %}
+
+    </div>
+
+    {% if movie.trailer_id %}
+        <div style="position: absolute; top: 180px; left: 1050px;">
+            <iframe width="500" height="330"
+                    src="https://www.youtube.com/embed/{{ movie.trailer_id }}"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+            </iframe>
+        </div>
+
+    {% else %}
+        <p>No trailer available</p>
     {% endif %}
-    
+
+
+
+
 {% endblock %}

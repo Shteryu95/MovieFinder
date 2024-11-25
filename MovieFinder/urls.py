@@ -7,4 +7,5 @@ urlpatterns = [
     path('', include('MovieFinder.common.urls')),
     path('accounts/', include('MovieFinder.accounts.urls')),
     path('movie/', include('MovieFinder.movies.urls')),
+
 ]

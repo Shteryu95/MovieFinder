@@ -1,10 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <form method="post" style="display: flex; justify-content: center; align-items: center;">
+    <form method="post" class="form-container" style="color: black; margin: 130px; font-weight: bold;">
         {% csrf_token %}
-        {{ form }}
+        <h1>Have an account ?</h1>
+        <br>
+        <div>
+            <label for="id_username">Username</label>
+            {{ form.username }}
 
+        </div>
+        <br>
+        <div>
+            <label for="id_password">Password</label>
+            {{ form.password }}
+
+        </div>
+        <br>
         <button type="submit" class="btn btn-success">Log in</button>
     </form>
-{% endblock %}
+{% endblock %}w

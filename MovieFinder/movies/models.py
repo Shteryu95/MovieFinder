@@ -2,27 +2,10 @@ from django.db import models
 from django.db.models import CASCADE
 
 from MovieFinder.accounts.models import CustomUser
+from MovieFinder.movies.choices import GenreChoices
 
 
 class Movie(models.Model):
-    GENRE_CHOICES = [
-        ('action', 'Action'),
-        ('comedy', 'Comedy'),
-        ('horror', 'Horror'),
-        ('drama', 'Drama'),
-        ('fantasy', 'Fantasy'),
-        ('thriller', 'Thriller'),
-        ('biography', 'Biography'),
-        ('anime', 'Anime'),
-        ('musical', 'Musical'),
-        ('mistery', 'Mistery'),
-        ('crime', 'Crime'),
-        ('adventure', 'Adventure'),
-        ('documentary', 'Documentary'),
-        ('sci-fi', 'Sci-Fi'),
-        ('sport', 'Sport'),
-        ('western', 'Western'),
-    ]
 
     name = models.CharField(
         max_length=50
@@ -31,7 +14,7 @@ class Movie(models.Model):
     released_date = models.DateField()
 
     genre = models.CharField(
-        choices=GENRE_CHOICES,
+        choices=GenreChoices,
     )
 
     poster = models.URLField()
@@ -42,6 +25,11 @@ class Movie(models.Model):
 
     resume = models.TextField(
         max_length=300,
+    )
+
+    trailer_id = models.CharField(
+        null=True,
+        blank=True,
     )
 
     user = models.ForeignKey(
