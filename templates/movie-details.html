@@ -1,36 +1,57 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div style="margin-right: 500px; margin-top: 40px;">
-        <h2>Movie Information</h2>
-        <img src="{{ movie.poster }}" alt="" style="max-width: 600px; max-height: 600px; width: auto; height: auto;">
-        <h2>{{ movie.name }}</h2>
-        <h3>{{ movie.genre }}</h3>
-        <p>{{ movie.released_date }}</p>
-        <p>{{ movie.awards }}</p>
-        <p>{{ movie.resume }}</p>
+    <h1>{{ movie.name }}</h1>
+    <div style="margin-right: 700px; margin-top: 40px;">
+        <img src="{{ movie.poster }}" alt="" style="max-width: 500px; max-height: 420px; width: auto; height: auto;">
+        <h3 style="color: black;">{{ movie.genre }}</h3>
+        <p style="color: black;">{{ movie.released_date }}</p>
+        
         {% if request.user == movie.user %}
             <a href="{% url 'movie-edit' movie.pk %}">Edit</a>
-            <a href="">Delete</a>
+            <a href="{% url 'movie-delete' movie.pk %}">Delete</a>
         {% endif %}
-
+    
     </div>
 
     {% if movie.trailer_id %}
-        <div style="position: absolute; top: 180px; left: 1050px;">
-            <iframe width="500" height="330"
+        <div style="position: absolute; top: 180px; left: 900px;">
+            <iframe width="600" height="330"
                     src="https://www.youtube.com/embed/{{ movie.trailer_id }}"
                     frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen>
             </iframe>
+        <p style="color: black;">{{ movie.resume }}</p>
         </div>
 
     {% else %}
-        <p>No trailer available</p>
+        <p style="color: black;">No trailer available</p>
     {% endif %}
+    
+    {% if user.is_authenticated %}
+            {% if user_rating %}
+                <h4>Your Rating: {{ user_rating.rating }} / 5</h4>
+                <p>You have already rated this movie.</p>
+            {% else %}
+                <h4>You haven't rated this movie yet. Please provide your rating:</h4>
+                <form method="POST" action="{% url 'rate_movie' movie.pk %}">
+                    {% csrf_token %}
+                    {{ rating_form.as_p }}
+                    <button type="submit">Submit Rating</button>
+                </form>
+            {% endif %}
+        {% else %}
+            <p><a href="{% url 'login' %}">Login</a> to rate this movie.</p>
+        {% endif %}
 
-
-
-
+        <h3>
+            Average Rating:
+            {% if movie.average_rating %}
+                {{ movie.average_rating }} / 5
+            {% else %}
+                No ratings yet
+            {% endif %}
+        </h3>
+    
 {% endblock %}

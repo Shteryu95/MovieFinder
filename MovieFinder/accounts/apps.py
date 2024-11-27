@@ -5,5 +5,5 @@ class AccountsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'MovieFinder.accounts'
 
-    # def ready(self):
-    #     import MovieFinder.accounts.signals
+    def ready(self):
+        import MovieFinder.accounts.signals

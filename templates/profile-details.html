@@ -1,9 +1,26 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    
+
     <h2>Personal Information</h2>
     
+    {% if object.first_name %}
     <h3>{{ object.first_name }}</h3>
+    {% endif %}
     
+    {% if object.last_name %}
+    <h3>{{ object.last_name }}</h3>
+    {% endif %}
+    
+    {% if object.age %}
+    <h3>{{ object.age }}</h3>
+    {% endif %}
+    
+    {% if object.profile_photo %}
+    <img src="{{ object.profile_photo }}" alt="Image" style="max-width: 200px; max-height: 200px; width: auto; height: auto;">
+    {% endif %}
+
+    <a href="{% url 'edit-profile' request.user.pk %}">Edit</a>
+    <a href="{% url 'delete-profile' request.user.pk %}">Delete</a>
+
 {% endblock %}

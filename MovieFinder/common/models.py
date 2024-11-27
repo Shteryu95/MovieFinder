@@ -6,13 +6,6 @@ from MovieFinder.movies.models import Movie
 
 
 class Rating(models.Model):
-    RATE_CHOICES = [
-        ('1', '1'),
-        ('2', '2'),
-        ('3', '3'),
-        ('4', '4'),
-        ('5', '5'),
-    ]
 
     user = models.ForeignKey(
         CustomUser,
@@ -26,9 +19,13 @@ class Rating(models.Model):
         related_name='movie_rating'
     )
 
-    rate = models.SmallIntegerField(
-        choices=RATE_CHOICES,
+    rating = models.SmallIntegerField(
+        null=True,
+        blank=True,
     )
+
+    class Meta:
+        unique_together = ('user', 'to_movie')
 
 
 class Comment(models.Model):

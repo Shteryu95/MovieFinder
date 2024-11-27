@@ -2,6 +2,7 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin, AbstractUser
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
+from django.db.models import CASCADE
 
 from MovieFinder.accounts.managers import CustomUserManager
 from MovieFinder.accounts.validators import UsernameValidator
@@ -16,6 +17,28 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     email = models.EmailField(
         unique=True
+    )
+
+    is_active = models.BooleanField(
+        default=True,
+    )
+
+    is_staff = models.BooleanField(
+        default=False,
+    )
+
+    EMAIL_FIELD = 'email'
+    USERNAME_FIELD = "username"
+    REQUIRED_FIELDS = ['email', ]
+
+    objects = CustomUserManager()
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(
+        CustomUser,
+        on_delete=CASCADE,
+        primary_key=True
     )
 
     first_name = models.CharField(
@@ -36,21 +59,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         blank=True,
     )
 
-    photo = models.URLField(
+    profile_photo = models.URLField(
+        max_length=300,
         null=True,
         blank=True,
     )
-
-    is_active = models.BooleanField(
-        default=True,
-    )
-
-    is_staff = models.BooleanField(
-        default=False,
-    )
-
-    EMAIL_FIELD = 'email'
-    USERNAME_FIELD = "username"
-    REQUIRED_FIELDS = ['email', ]
-
-    objects = CustomUserManager()

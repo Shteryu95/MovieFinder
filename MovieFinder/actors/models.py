@@ -1,8 +1,6 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
-from MovieFinder.movies.models import Movie
-
 
 class Actor(models.Model):
     full_name = models.CharField(
@@ -17,7 +15,4 @@ class Actor(models.Model):
         max_length=30,
     )
 
-    movies = models.ManyToManyField(
-        Movie,
-        related_name='actor',
-    )
+

@@ -1,7 +1,8 @@
 from django.db import models
-from django.db.models import CASCADE
+from django.db.models import CASCADE, Avg
 
 from MovieFinder.accounts.models import CustomUser
+from MovieFinder.actors.models import Actor
 from MovieFinder.movies.choices import GenreChoices
 
 
@@ -19,8 +20,9 @@ class Movie(models.Model):
 
     poster = models.URLField()
 
-    awards = models.CharField(
-        max_length=100,
+    main_actors = models.ManyToManyField(
+        Actor,
+        related_name='starred_movie'
     )
 
     resume = models.TextField(
@@ -36,3 +38,14 @@ class Movie(models.Model):
         CustomUser,
         on_delete=CASCADE,
     )
+
+    class Meta:
+        ordering = ['name', ]
+
+    @property
+    def average_rating(self):
+
+        ratings = self.movie_rating.all()
+        if ratings.exists():
+            return round(ratings.aggregate(Avg('rating'))['rating__avg'], 1)
+        return None
