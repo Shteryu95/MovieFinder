@@ -3,10 +3,11 @@
 {% block content %}
     
     <h2>Edit Movie Information</h2>
+    {% if request.user.is_staff %}
     <form method="post">
         {% csrf_token %}
         {{ form }}
         <button type="submit">Edit</button>
     </form>
-    
+    {% endif %}
 {% endblock %}

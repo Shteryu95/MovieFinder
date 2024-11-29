@@ -2,6 +2,29 @@
 
 {% block content %}
 
+    <form>
+        <div style="display: flex; justify-content: center; align-items: center; margin-top: 20px;">
+            {{ search_form }}
+            <button
+                    type="submit"
+                    style="
+            padding: 10px 15px; 
+            font-size: 16px; 
+            margin-left: 10px; 
+            background-color: #007bff; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);"
+            >
+                Search
+            </button>
+        </div>
+
+
+    </form>
+
     {% if not all_movies %}
         <h2>No movies to show</h2>
     {% else %}

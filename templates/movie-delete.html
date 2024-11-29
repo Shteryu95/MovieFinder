@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    {% if request.user.is_staff %}
     <form method="post">
         {% csrf_token %}
         {{ form }}
         <button type="submit">Delete</button>
     </form>
-
+    {% endif %}
 {% endblock %}

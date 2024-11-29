@@ -20,11 +20,6 @@ class Movie(models.Model):
 
     poster = models.URLField()
 
-    main_actors = models.ManyToManyField(
-        Actor,
-        related_name='starred_movie'
-    )
-
     resume = models.TextField(
         max_length=300,
     )

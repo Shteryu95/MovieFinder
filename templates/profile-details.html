@@ -5,15 +5,15 @@
     <h2>Personal Information</h2>
     
     {% if object.first_name %}
-    <h3>{{ object.first_name }}</h3>
+    <h3>First name: {{ object.first_name }}</h3>
     {% endif %}
     
     {% if object.last_name %}
-    <h3>{{ object.last_name }}</h3>
+    <h3>Last name:{{ object.last_name }}</h3>
     {% endif %}
     
     {% if object.age %}
-    <h3>{{ object.age }}</h3>
+    <h3>Age: {{ object.age }}</h3>
     {% endif %}
     
     {% if object.profile_photo %}

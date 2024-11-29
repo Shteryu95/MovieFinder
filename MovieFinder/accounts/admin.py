@@ -13,7 +13,9 @@ class CustomUserAdmin(UserAdmin):
     form = CustomUserChangeForm
     add_form = CustomUserCreationForm
 
-    list_display = ['username', 'email']
+    list_display = ['username', 'email', "is_staff", "is_superuser"]
+    search_fields = ('username',)
+    ordering = ('pk',)
 
     fieldsets = (
         ('Credentials', {"fields": ("username", "password")}),

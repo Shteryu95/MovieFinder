@@ -29,23 +29,20 @@ class Rating(models.Model):
 
 
 class Comment(models.Model):
-    text = models.TextField(
-        max_length=300,
-        null=True,
-        blank=True,
+    movie = models.ForeignKey(
+        Movie,
+        on_delete=models.CASCADE,
+        related_name='comments'
     )
+
+    user = models.ForeignKey(
+        CustomUser,
+        on_delete=models.SET_NULL,
+        null=True, blank=True
+    )
+
+    text = models.TextField()
 
     created_at = models.DateTimeField(
         auto_now_add=True,
     )
-
-    to_movie = models.ForeignKey(
-        to=Movie,
-        on_delete=models.CASCADE,
-    )
-
-    user = models.ForeignKey(
-        to=CustomUser,
-        on_delete=models.CASCADE,
-    )
-

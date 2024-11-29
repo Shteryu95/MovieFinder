@@ -59,8 +59,4 @@ class Profile(models.Model):
         blank=True,
     )
 
-    profile_photo = models.URLField(
-        max_length=300,
-        null=True,
-        blank=True,
-    )
+    profile_photo = models.ImageField(upload_to='media/', null=True, blank=True)

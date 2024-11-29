@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+    {% if user.is_staff %}
     <form method="post" class="form-group">
 
         {{ form.as_p }}
@@ -10,4 +10,5 @@
         <button type="submit" class="btn btn-success">Create Movie</button>
 
     </form>
+    {% endif %}
 {% endblock %}

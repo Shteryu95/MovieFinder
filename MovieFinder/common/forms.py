@@ -11,3 +11,5 @@ class RatingForm(forms.ModelForm):
         widgets = {
             'rating': forms.RadioSelect(choices=GenreChoices)
         }
+
+
