@@ -10,8 +10,8 @@ urlpatterns = [
         path('edit/', views.MovieEditView.as_view(), name='movie-edit'),
         path('delete/', views.MovieDeleteView.as_view(), name='movie-delete'),
         path('rate/', MovieRatingView.as_view(), name='rate_movie'),
-        path('details/comment/', views.CommentCreateView.as_view(), name='comment-movie'),
         path('details/', views.MovieDetailsView.as_view(), name='movie-details'),
+        path('details/comment/', views.CommentCreateView.as_view(), name='comment-movie'),
     ])),
 ]
 

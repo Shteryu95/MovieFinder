@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div style="font-family: 'Playfair Display', serif; font-size: 24px; font-weight: bold; color: #2c3e50;">
+
+        <h3>{{ actor.full_name }}</h3>
+        <img src="{{ actor.photo }}" alt=""
+             style="max-width: 300px; max-height: 300px; width: auto; height: auto;">
+        <h4>Age: {{ actor.age }}</h4>
+        <h3>Country: {{ actor.country }}</h3>
+
+        {% for movie in actor.all_movies.all %}
+            <a style="text-decoration: none; color: #3498db; font-weight: bold; transition: color 0.3s ease;"
+               href="{% url 'movie-details' movie.pk %}">{{ movie.name }}</a>
+            <br>
+        {% endfor %}
+
+        <div>
+
+
+            <div style="position: absolute; bottom: 250px; left: 1200px;">
+
+                {% if request.user.is_staff or request.user.is_superuser %}
+                    <a type="submit" class="btn btn-success" href="{% url 'actor-edit' actor.pk %}">Edit</a>
+                    <a type="submit" class="btn btn-danger" href="{% url 'actor-delete' actor.pk %}">Delete</a>
+                {% endif %}
+
+            </div>
+
+{% endblock %}

@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView, FormView
 
 from MovieFinder.common.forms import RatingForm
@@ -63,6 +63,7 @@ class MovieDetailsView(LoginRequiredMixin, DetailView):
             ).first()
         context['rating_form'] = RatingForm()
         context['comment_form'] = CommentForm()
+        context['actors'] = self.object.movie_actors.all  # Access related actors
         return context
 
 
@@ -103,7 +104,7 @@ class Catalogue(ListView):
     model = Movie
     context_object_name = 'all_movies'
     template_name = 'catalogue.html'
-    paginate_by = 2
+    paginate_by = 1
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

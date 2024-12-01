@@ -6,8 +6,8 @@
     {% if request.user.is_staff %}
     <form method="post">
         {% csrf_token %}
-        {{ form }}
-        <button type="submit">Edit</button>
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Edit</button>
     </form>
     {% endif %}
 {% endblock %}

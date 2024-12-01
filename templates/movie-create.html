@@ -1,13 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <h2>Movie Create</h2>
+    
     {% if user.is_staff %}
-    <form method="post" class="form-group">
+        
+    <form method="post" class="form-group" style="color: black; margin: 100px auto; width: 50%">
 
         {{ form.as_p }}
         {% csrf_token %}
 
-        <button type="submit" class="btn btn-success">Create Movie</button>
+        <button type="submit" class="btn btn-success">Create</button>
 
     </form>
     {% endif %}

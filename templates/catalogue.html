@@ -2,8 +2,10 @@
 
 {% block content %}
 
-    <form>
-        <div style="display: flex; justify-content: center; align-items: center; margin-top: 20px;">
+    <div>
+
+        <form style="display: flex; justify-content: center; align-items: center; margin-top: -10px;">
+
             {{ search_form }}
             <button
                     type="submit"
@@ -20,38 +22,53 @@
             >
                 Search
             </button>
-        </div>
 
 
-    </form>
+        </form>
 
-    {% if not all_movies %}
-        <h2>No movies to show</h2>
-    {% else %}
-        <h2>Movies collection:</h2>
+    </div>
 
-        {% for movie in all_movies %}
-            <div>
-
-                <h3>{{ movie.name }}</h3>
-                <img src="{{ movie.poster }}" alt=""
-                     style="max-width: 300px; max-height: 300px; width: auto; height: auto;">
-                <p>{{ movie.genre }}</p>
-                {% if request.user.is_authenticated %}
-                    <a href="{% url 'movie-details' movie.pk %}">See more...</a>
-                {% endif %}
-
-            </div>
-        {% endfor %}
+    <div>
+        {% if not all_movies %}
+            <h2>No movies to show</h2>
+        {% else %}
 
 
 
-        <div class="pagination">
+            <ul style="list-style: none; padding: 0; margin: 40px; display: flex; justify-content: center; align-items: center; gap: 10px; color: black">
+
+                {% for movie in all_movies %}
+                    <li>
+
+                        <h3>{{ movie.name }}</h3>
+                        <img src="{{ movie.poster }}" alt=""
+                             style="max-width: 300px; max-height: 300px; width: auto; height: auto;">
+                        <p>{{ movie.genre }}</p>
+                        <p style="color: black;">{{ movie.released_date }}</p>
+                        <p>{{ movie.main_actors }}</p>
+                        {% if request.user.is_authenticated %}
+                            <a type="submit" class="btn btn-light" href="{% url 'movie-details' movie.pk %}">See more...</a>
+                        {% endif %}
+
+                    </li>
+
+                {% endfor %}
+
+            </ul>
+
+    </div>
+
+
+
+            <div class="pagination"
+                 style="position: absolute; bottom: 150px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px;">
     <span class="step-links">
 
         {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; First</a>
-            <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            <a href="?page=1"
+               style="background-color: dodgerblue; border: 1px solid #ccc; color: #333; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 14px; transition: background-color 0.3s, color 0.3s;">&laquo; First</a>
+            <a href="?page={{ page_obj.previous_page_number }}"
+               style="background-color: dodgerblue; border: 1px solid #ccc; color: #333; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 14px; transition: background-color 0.3s, color 0.3s;">Previous</a>
         {% endif %}
 
         <span class="current">
@@ -59,12 +76,14 @@
         </span>
 
         {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">Next</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+            <a href="?page={{ page_obj.next_page_number }}"
+               style="background-color: dodgerblue; border: 1px solid #ccc; color: #333; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 14px; transition: background-color 0.3s, color 0.3s;">Next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}"
+               style="background-color: dodgerblue; border: 1px solid #ccc; color: #333; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 14px; transition: background-color 0.3s, color 0.3s;">Last &raquo;</a>
         {% endif %}
     </span>
-        </div>
+            </div>
 
-    {% endif %}
+        {% endif %}
 
 {% endblock %}

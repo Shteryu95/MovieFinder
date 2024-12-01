@@ -1,8 +1,8 @@
 from django.db import models
-from django.db.models import CASCADE, Avg
+from django.db.models import Avg
+from django.urls import reverse_lazy
 
 from MovieFinder.accounts.models import CustomUser
-from MovieFinder.actors.models import Actor
 from MovieFinder.movies.choices import GenreChoices
 
 
@@ -20,7 +20,7 @@ class Movie(models.Model):
 
     poster = models.URLField()
 
-    resume = models.TextField(
+    resume = models.CharField(
         max_length=300,
     )
 
@@ -29,13 +29,15 @@ class Movie(models.Model):
         blank=True,
     )
 
-    user = models.ForeignKey(
-        CustomUser,
-        on_delete=CASCADE,
+    user = models.CharField(
+        max_length=100,
     )
 
     class Meta:
         ordering = ['name', ]
+
+    def __str__(self):
+        return self.name
 
     @property
     def average_rating(self):

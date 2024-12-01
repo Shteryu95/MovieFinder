@@ -30,7 +30,6 @@ INSTALLED_APPS = [
     "MovieFinder.common.apps.CommonConfig",
     "MovieFinder.movies.apps.MoviesConfig",
     "MovieFinder.actors.apps.ActorsConfig",
-    "MovieFinder.directors.apps.DirectorsConfig",
     "MovieFinder.accounts.apps.AccountsConfig"
 ]
 
@@ -119,7 +118,7 @@ STATICFILES_DIRS = (
 )
 
 MEDIA_URL = 'media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = BASE_DIR / 'media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

@@ -3,24 +3,24 @@
 {% block content %}
 
     <h2>Personal Information</h2>
-    
-    {% if object.first_name %}
-    <h3>First name: {{ object.first_name }}</h3>
-    {% endif %}
-    
-    {% if object.last_name %}
-    <h3>Last name:{{ object.last_name }}</h3>
-    {% endif %}
-    
-    {% if object.age %}
-    <h3>Age: {{ object.age }}</h3>
-    {% endif %}
-    
-    {% if object.profile_photo %}
-    <img src="{{ object.profile_photo }}" alt="Image" style="max-width: 200px; max-height: 200px; width: auto; height: auto;">
-    {% endif %}
 
-    <a href="{% url 'edit-profile' request.user.pk %}">Edit</a>
-    <a href="{% url 'delete-profile' request.user.pk %}">Delete</a>
+        {% if object.first_name %}
+            <h3>First name: {{ object.first_name }}</h3>
+        {% endif %}
+
+        {% if object.last_name %}
+            <h3>Last name:{{ object.last_name }}</h3>
+        {% endif %}
+
+        {% if object.age %}
+            <h3>Age: {{ object.age }}</h3>
+        {% endif %}
+
+        {% if object.profile_photo %}
+            <img src="{{ object.profile_picture.url }}" alt="Profile Picture" style="max-width: 200px; height: auto;">
+        {% endif %}
+
+    <a type="submit" class="btn btn-success" href="{% url 'edit-profile' request.user.pk %}">Edit</a>
+    <a type="submit" class="btn btn-danger" href="{% url 'delete-profile' request.user.pk %}">Delete</a>
 
 {% endblock %}

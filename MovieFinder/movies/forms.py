@@ -13,13 +13,19 @@ class MovieBaseForm(forms.ModelForm):
             'name': 'Movie name',
             'released_date': 'Released date',
             'genre': 'Genre',
-            'poster': 'Movie poster',
-            'awards': 'Awards won',
-            'resume': 'Short summary',
+            'poster': 'Poster',
+            'resume': 'Resume',
+            'trailer_id': 'Trailer',
+            'main_actors': 'Actors',
         }
 
         widgets = {
+            'name': forms.TextInput(attrs={'placeholder': 'Enter a movie name...'}),
+            'poster': forms.TextInput(attrs={'placeholder': 'Set a movie poster...'}),
+            'resume': forms.TextInput(attrs={'placeholder': 'Write a short resume...'}),
+            'trailer_id': forms.TextInput(attrs={'placeholder': 'Put a video...'}),
             'released_date': forms.DateInput(attrs={'type': 'date'}),
+            'main_actors': forms.TextInput(attrs={'placeholder': 'Show the characters...'}),
         }
 
 
