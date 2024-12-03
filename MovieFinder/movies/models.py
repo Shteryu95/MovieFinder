@@ -33,8 +33,13 @@ class Movie(models.Model):
         max_length=100,
     )
 
+    approved = models.BooleanField(default=False)
+
     class Meta:
         ordering = ['name', ]
+        permissions = [
+            ('approve_movies', 'Approve movies'),
+        ]
 
     def __str__(self):
         return self.name

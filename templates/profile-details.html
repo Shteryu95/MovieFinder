@@ -1,8 +1,33 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 
     <h2>Personal Information</h2>
+    <div style="
+    width: 90%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px;
+    color: black;
+    
+    ">
+
+        {% if object.profile_photo %}
+            <img src="{{ object.profile_photo.url }}" alt="" style="
+             width: 150px;
+             height: 150px;
+             border-radius: 50%;
+             object-fit: cover;
+             border: 3px solid #4CAF50;
+             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+             display: block;
+             margin: 0 auto;
+         ">
+            {% else %}
+            <img src="{% static 'images/no photo.png' %}" alt="">
+            
+        {% endif %}
 
         {% if object.first_name %}
             <h3>First name: {{ object.first_name }}</h3>
@@ -16,11 +41,14 @@
             <h3>Age: {{ object.age }}</h3>
         {% endif %}
 
-        {% if object.profile_photo %}
-            <img src="{{ object.profile_picture.url }}" alt="Profile Picture" style="max-width: 200px; height: auto;">
-        {% endif %}
 
-    <a type="submit" class="btn btn-success" href="{% url 'edit-profile' request.user.pk %}">Edit</a>
-    <a type="submit" class="btn btn-danger" href="{% url 'delete-profile' request.user.pk %}">Delete</a>
+    </div>
+
+    <div>
+        <a type="submit" class="btn btn-success" href="{% url 'edit-profile' request.user.pk %}">Edit</a>
+        <a type="submit" class="btn btn-danger" href="{% url 'delete-profile' request.user.pk %}">Delete</a>
+    </div>
+
+
 
 {% endblock %}

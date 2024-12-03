@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 
@@ -33,11 +34,11 @@
             {{ movie.resume }}
         </div>
     {% endif %}
-    
+
     {% for actor in movie.movie_actors.all %}
-        <a style="text-decoration: none; color: #3498db; font-weight: bold; transition: color 0.3s ease;" href="{% url 'actor-details' actor.pk %}">{{ actor.full_name }}</a>
-    {% empty %}
-        nothing to show
+        <a style="text-decoration: none; color: #3498db; font-weight: bold; transition: color 0.3s ease;"
+           href="{% url 'actor-details' actor.pk %}">{{ actor.full_name }}</a>
+
     {% endfor %}
 
 
@@ -77,8 +78,13 @@
             <div style="background-color: #ffffff; padding: 15px; margin-bottom: 15px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                     <div style="display: flex; align-items: center;">
-                        <img src="{{ comment.user.profile.profile_photo }}" alt="User Avatar"
+                        {% if comment.user.profile.profile_photo %}
+                            
+                        <img src="{{ comment.user.profile.profile_photo.url }}" alt="User Avatar"
                              style="border-radius: 50%; width: 40px; height: 40px; margin-right: 10px;">
+                            
+                        {% endif %}
+                    
                         <p style="font-weight: bold; color: #333; font-size: 16px;">{{ comment.user }}</p>
                     </div>
                     <p style="font-size: 12px; color: #777;">{{ comment.created_at }}</p>
@@ -91,14 +97,13 @@
         {% endfor %}
 
 
-
     </div>
 
     <div style="position: absolute; bottom: 300px; left: 1050px; color: black">
 
         <h2>Leave a Comment</h2>
         {% if user.is_authenticated %}
-            <form method="post" action="{% url 'comment-movie' movie.pk %} ">
+            <form method="post" action="{% url 'comment-movie' movie.pk %}">
                 {% csrf_token %}
                 {{ comment_form.as_p }}
                 <button type="submit" class="btn btn-light">Post</button>

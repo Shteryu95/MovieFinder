@@ -1,13 +1,25 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    
-    <form method="post" enctype="multipart/form-data">
-    
+
+    <h2>Edit Profile</h2>
+
+    <form method="post" enctype="multipart/form-data" style="
+          width: 90%;
+          max-width: 500px;
+          margin: 0 auto;
+          padding: 60px;
+            color: black">
         {% csrf_token %}
         {{ form.as_p }}
-        
-        <button type="submit">Edit</button>
-    
+        <button type="submit" style="
+                    background-color: #4CAF50;
+                    color: white;
+                    padding: 10px 20px;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    font-size: 16px;">Save Changes
+        </button>
     </form>
 {% endblock %}

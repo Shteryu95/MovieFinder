@@ -21,7 +21,8 @@ class Actor(models.Model):
 
     all_movies = models.ManyToManyField(
         to=Movie,
-        related_name='movie_actors'
+        related_name='movie_actors',
+        blank=True,
     )
 
     def __str__(self):

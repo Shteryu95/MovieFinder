@@ -7,7 +7,7 @@ from MovieFinder.movies.models import Movie
 class MovieBaseForm(forms.ModelForm):
     class Meta:
         model = Movie
-        exclude = ['user', ]
+        exclude = ['user', 'approved']
 
         labels = {
             'name': 'Movie name',
@@ -66,6 +66,8 @@ class CommentForm(forms.ModelForm):
                 'style': 'width: 400px; max-width: 100%;'
             }),
         }
+
         labels = {
             'text': '',
         }
+

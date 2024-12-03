@@ -36,7 +36,7 @@ class ActorDelete(ActorBaseForm):
             self.fields[field_name].widget.attrs['disabled'] = True
 
 
-class SearchForm(ActorBaseForm):
+class SearchForm(forms.Form):
     actor_name = forms.CharField(
         required=False,
         widget=forms.TextInput(attrs={

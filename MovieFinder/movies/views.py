@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect
@@ -13,12 +14,16 @@ from MovieFinder.movies.models import Movie
 class MovieCreateView(LoginRequiredMixin, CreateView):
     model = Movie
     form_class = CreateMovie
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('movie-catalogue')
     template_name = 'movie-create.html'
 
     def form_valid(self, form):
         movie = form.save(commit=False)
         movie.user = self.request.user
+        messages.success(self.request, "Your movie has been submitted and is awaiting approval.")
+        if movie.user.is_staff:
+            movie.approved = True
+
         return super().form_valid(form)
 
 
@@ -104,7 +109,7 @@ class Catalogue(ListView):
     model = Movie
     context_object_name = 'all_movies'
     template_name = 'catalogue.html'
-    paginate_by = 1
+    paginate_by = 3
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -116,10 +121,20 @@ class Catalogue(ListView):
         queryset = super().get_queryset()
         search_name_or_genre = self.request.GET.get('movie_name_or_genre')
 
+        if not self.request.user.has_perm('movies.approve_movies'):
+            queryset = queryset.filter(approved=True)
+
         if search_name_or_genre:
             queryset = queryset.filter(
                 Q(name__icontains=search_name_or_genre) | Q(genre__icontains=search_name_or_genre))
 
         return queryset
 
+
+def approve_movies(request, pk):
+    movie = Movie.objects.get(pk=pk)
+    movie.approved = True
+    movie.save()
+
+    return redirect(request.META.get('HTTP_REFERER'))
 

@@ -32,7 +32,7 @@ class ActorDeleteView(DeleteView):
     model = Actor
     form_class = ActorDelete
     template_name = 'actor-delete.html'
-    success_url = reverse_lazy('')
+    success_url = reverse_lazy('actor-catalogue')
 
     def get_initial(self):
         return self.get_object().__dict__
