@@ -61,3 +61,9 @@ class Profile(models.Model):
 
     profile_photo = models.ImageField(upload_to='', null=True, blank=True, default='no photo.png')
 
+    def __str__(self):
+        if self.first_name and self.last_name:
+            return self.first_name + " " + self.last_name
+
+        return self.first_name or self.last_name or "Anonymous"
+

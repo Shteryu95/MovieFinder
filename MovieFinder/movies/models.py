@@ -1,6 +1,4 @@
 from django.db import models
-from django.db.models import Avg
-from django.urls import reverse_lazy
 
 from MovieFinder.accounts.models import CustomUser
 from MovieFinder.movies.choices import GenreChoices
@@ -46,8 +44,10 @@ class Movie(models.Model):
 
     @property
     def average_rating(self):
-
         ratings = self.movie_rating.all()
+
         if ratings.exists():
-            return round(ratings.aggregate(Avg('rating'))['rating__avg'], 1)
+            return sum(r.rating for r in ratings) / len(ratings)
         return None
+
+

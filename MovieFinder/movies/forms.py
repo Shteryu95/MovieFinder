@@ -22,7 +22,7 @@ class MovieBaseForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'placeholder': 'Enter a movie name...'}),
             'poster': forms.TextInput(attrs={'placeholder': 'Set a movie poster...'}),
-            'resume': forms.TextInput(attrs={'placeholder': 'Write a short resume...'}),
+            'resume': forms.Textarea(attrs={'placeholder': 'Write a short resume...'}),
             'trailer_id': forms.TextInput(attrs={'placeholder': 'Put a video...'}),
             'released_date': forms.DateInput(attrs={'type': 'date'}),
             'main_actors': forms.TextInput(attrs={'placeholder': 'Show the characters...'}),
@@ -60,14 +60,15 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ['text']
         widgets = {
-            'text': forms.TextInput(attrs={
+            'text': forms.Textarea(attrs={
                 'placeholder': 'Enter your comment here...',
                 'class': 'comment-input',
-                'style': 'width: 400px; max-width: 100%;'
+                'style': 'width: 400px; height: 100px; padding: 10px; border: 1px solid #ccc; resize: none; '
             }),
         }
 
         labels = {
             'text': '',
         }
+
 

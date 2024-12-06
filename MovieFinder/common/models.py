@@ -16,7 +16,7 @@ class Rating(models.Model):
     to_movie = models.ForeignKey(
         to=Movie,
         on_delete=CASCADE,
-        related_name='movie_rating'
+        related_name='movie_rating',
     )
 
     rating = models.SmallIntegerField(
@@ -37,7 +37,7 @@ class Comment(models.Model):
 
     user = models.ForeignKey(
         CustomUser,
-        on_delete=models.SET_NULL,
+        on_delete=models.CASCADE,
         null=True, blank=True
     )
 

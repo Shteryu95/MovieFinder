@@ -5,110 +5,128 @@
 
     <h1>{{ movie.name }}</h1>
 
-    <div style="position: absolute; bottom: 250px; left: 1200px;">
+    <div>
 
-        {% if request.user.is_staff or request.user.is_superuser %}
-            <a type="submit" class="btn btn-success" href="{% url 'movie-edit' movie.pk %}">Edit</a>
-            <a type="submit" class="btn btn-danger" href="{% url 'movie-delete' movie.pk %}">Delete</a>
-        {% endif %}
+        <div style="display: block; width: 100px; height: 100px;">
 
-    </div>
+            <h3 style="color: #ffffff">Starring actors:</h3>
 
-    {% if movie.trailer_id %}
-        <div style="position: absolute; top: 180px; left: 350px;">
-            <iframe width="600" height="330"
-                    src="https://www.youtube.com/embed/{{ movie.trailer_id }}"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen>
-            </iframe>
+            {% for actor in movie.movie_actors.all %}
+                <a style="text-decoration: none; color: #3498db; font-weight: bold; transition: color 0.3s ease;"
+                   href="{% url 'actor-details' actor.pk %}">{{ actor.full_name }}</a>
+
+            {% endfor %}
 
         </div>
 
-    {% else %}
-        <p style="color: black;">No trailer available</p>
-    {% endif %}
+        <div>
 
-    {% if movie.resume %}
-        <div style="color: black; position: absolute; top: 600px; left: 400px; width: 500px; word-wrap: break-word; line-height: 1.5;">
-            {{ movie.resume }}
-        </div>
-    {% endif %}
+            {% if movie.trailer_id %}
+                <div style="position: absolute; top: 180px; left: 350px;">
+                    <iframe width="600" height="330"
+                            src="https://www.youtube.com/embed/{{ movie.trailer_id }}"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                    </iframe>
 
-    {% for actor in movie.movie_actors.all %}
-        <a style="text-decoration: none; color: #3498db; font-weight: bold; transition: color 0.3s ease;"
-           href="{% url 'actor-details' actor.pk %}">{{ actor.full_name }}</a>
-
-    {% endfor %}
-
-
-    <div style="position: absolute; top: 180px; left: 1100px; color: black">
-
-        {% if user.is_authenticated %}
-            {% if user_rating %}
-                <h4>Your Rating: {{ user_rating.rating }} / 5</h4>
-                <h3>Thanks for voting!</h3>
-            {% else %}
-                <h4>You haven't rated this movie yet.</h4>
-                <form method="POST" action="{% url 'rate_movie' movie.pk %}">
-                    {% csrf_token %}
-                    {{ rating_form }}
-                    <button type="submit" class="btn btn-success">Submit Rating</button>
-                </form>
-            {% endif %}
-
-        {% endif %}
-
-        <h3>
-            Average Rating:
-            {% if movie.average_rating %}
-                {{ movie.average_rating }} / 5
-            {% else %}
-                No ratings yet
-            {% endif %}
-        </h3>
-
-    </div>
-
-
-    <div style="position: absolute; bottom: 220px; right: 10px; color: white; width: 300px; word-wrap: break-word; line-height: 1.5; max-height: 550px; overflow-y: auto;">
-
-        {% for comment in movie.comments.all %}
-
-            <div style="background-color: #ffffff; padding: 15px; margin-bottom: 15px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                    <div style="display: flex; align-items: center;">
-                        {% if comment.user.profile.profile_photo %}
-                            
-                        <img src="{{ comment.user.profile.profile_photo.url }}" alt="User Avatar"
-                             style="border-radius: 50%; width: 40px; height: 40px; margin-right: 10px;">
-                            
-                        {% endif %}
-                    
-                        <p style="font-weight: bold; color: #333; font-size: 16px;">{{ comment.user }}</p>
-                    </div>
-                    <p style="font-size: 12px; color: #777;">{{ comment.created_at }}</p>
                 </div>
-                <p style="font-size: 14px; color: #555;">{{ comment.text }}</p>
+
+            {% else %}
+                <p style="color: black;">No trailer available</p>
+            {% endif %}
+
+            {% if movie.resume %}
+                <div style="color: black; position: absolute; top: 550px; left: 400px; width: 500px; word-wrap: break-word; line-height: 1.5;">
+                    {{ movie.resume }}
+                </div>
+            {% endif %}
+
+        </div>
+
+        <div>
+
+            <div style="position: absolute; top: 180px; left: 1100px; color: black">
+
+                {% if user.is_authenticated %}
+                    {% if user_rating %}
+                        <h4>Your Rating: {{ user_rating.rating }} / 5</h4>
+                        <h3>Thanks for voting!</h3>
+                    {% else %}
+                        <h4>You haven't rated this movie yet.</h4>
+                        <form method="POST">
+                            {% csrf_token %}
+                            {{ rating_form }}
+                            <button type="submit" class="btn btn-success">Submit Rating</button>
+                        </form>
+                    {% endif %}
+
+                {% endif %}
+
+                <h3>
+                    Average Rating:
+                    {% if movie.average_rating %}
+                        {{ movie.average_rating }} / 5
+                    {% else %}
+                        No ratings yet
+                    {% endif %}
+                </h3>
+
             </div>
 
-        {% empty %}
-            <p>No comments yet. Be the first to comment!</p>
-        {% endfor %}
 
+            <div style="position: absolute; bottom: 230px; right: 420px; color: black">
+
+                <h2>Leave a Comment</h2>
+                {% if user.is_authenticated %}
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ comment_form }}
+
+                        <button type="submit" class="btn btn-light">Post</button>
+                    </form>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <div style="position: absolute; bottom: 220px; right: 10px; color: white; width: 300px; word-wrap: break-word; line-height: 1.5; max-height: 550px; overflow-y: auto;">
+
+            {% for comment in movie.comments.all %}
+
+                <div style="background-color: #ffffff; padding: 15px; margin-bottom: 15px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <div style="display: flex; align-items: center;">
+                            {% if comment.user.profile.profile_photo %}
+
+                                <img src="{{ comment.user.profile.profile_photo.url }}" alt="User Avatar"
+                                     style="border-radius: 50%; width: 40px; height: 40px; margin-right: 10px;">
+
+                            {% endif %}
+
+                            <p style="font-weight: bold; color: #333; font-size: 16px;">{{ comment.user }}</p>
+                        </div>
+                        <p style="font-size: 12px; color: #777;">{{ comment.created_at }}</p>
+                    </div>
+                    <p style="font-size: 14px; color: #555;">{{ comment.text }}</p>
+                </div>
+
+            {% empty %}
+                <p>No comments yet. Be the first to comment!</p>
+            {% endfor %}
+
+        </div>
 
     </div>
 
-    <div style="position: absolute; bottom: 300px; left: 1050px; color: black">
+    <div style="position: absolute; bottom: 150px; left: 900px;">
 
-        <h2>Leave a Comment</h2>
-        {% if user.is_authenticated %}
-            <form method="post" action="{% url 'comment-movie' movie.pk %}">
-                {% csrf_token %}
-                {{ comment_form.as_p }}
-                <button type="submit" class="btn btn-light">Post</button>
-            </form>
-
+        {% if request.user.is_staff or request.user.is_superuser %}
+            <a type="submit" class="btn btn-success" href="{% url 'movie-edit' movie.pk %}">Edit Movie</a>
+            <a type="submit" class="btn btn-danger" href="{% url 'movie-delete' movie.pk %}">Delete Movie</a>
         {% endif %}
 
     </div>

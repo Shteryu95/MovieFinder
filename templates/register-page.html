@@ -9,6 +9,13 @@
     <div>
         <label for="id_username">Username</label>
         {{ form.username }}
+        {% if form.username.errors %}
+        <div class="error">
+            {% for error in form.username.errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
 
     </div>
         <br>
@@ -27,6 +34,13 @@
     <div>
         <label for="id_password2">Confirm Password</label>
         {{ form.password2 }}
+        {% if form.password2.errors %}
+        <div class="error">
+            {% for error in form.password2.errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
 
     </div>
         <br>

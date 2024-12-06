@@ -1,7 +1,7 @@
 from django.urls import path, include
 
 from MovieFinder.movies import views
-from MovieFinder.movies.views import MovieRatingView, approve_movies
+from MovieFinder.movies.views import approve_movies
 
 urlpatterns = [
     path('create/', views.MovieCreateView.as_view(), name='movie-create'),
@@ -9,9 +9,7 @@ urlpatterns = [
     path('<int:pk>/', include([
         path('edit/', views.MovieEditView.as_view(), name='movie-edit'),
         path('delete/', views.MovieDeleteView.as_view(), name='movie-delete'),
-        path('rate/', MovieRatingView.as_view(), name='rate_movie'),
         path('details/', views.MovieDetailsView.as_view(), name='movie-details'),
-        path('details/comment/', views.CommentCreateView.as_view(), name='comment-movie'),
         path('approve/', approve_movies, name='approve'),
     ])),
 ]

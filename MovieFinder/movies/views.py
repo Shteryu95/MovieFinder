@@ -1,12 +1,12 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView, FormView
+from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 
 from MovieFinder.common.forms import RatingForm
-from MovieFinder.common.models import Rating, Comment
+from MovieFinder.common.models import Rating
 from MovieFinder.movies.forms import CreateMovie, EditMovie, DeleteMovie, SearchForm, CommentForm
 from MovieFinder.movies.models import Movie
 
@@ -68,41 +68,29 @@ class MovieDetailsView(LoginRequiredMixin, DetailView):
             ).first()
         context['rating_form'] = RatingForm()
         context['comment_form'] = CommentForm()
-        context['actors'] = self.object.movie_actors.all  # Access related actors
+        context['actors'] = self.object.movie_actors.all
         return context
 
+    def post(self, request, *args, **kwargs):
+        movie = self.get_object()
+        comment_form = CommentForm(request.POST)
+        rating_form = RatingForm(request.POST)
 
-class CommentCreateView(CreateView):
-    model = Comment
-    form_class = CommentForm
-    template_name = 'movie-details.html'
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.movie = movie
+            comment.user = request.user
+            comment.save()
+            return redirect('movie-details', pk=movie.pk)
 
-    def form_valid(self, form):
-        movie = get_object_or_404(Movie, pk=self.kwargs['pk'])
+        if rating_form.is_valid():
+            rating = rating_form.save(commit=False)
+            rating.to_movie = movie
+            rating.user = request.user
+            rating.save()
+            return redirect('movie-details', pk=movie.pk)
 
-        form.instance.movie = movie
-        form.instance.user = self.request.user
-
-        return super().form_valid(form)
-
-    def get_success_url(self):
-        return reverse_lazy('movie-details', kwargs={'pk': self.object.movie.id})
-
-
-class MovieRatingView(LoginRequiredMixin, FormView):
-    form_class = RatingForm
-
-    def form_valid(self, form):
-        movie = get_object_or_404(Movie, pk=self.kwargs['pk'])
-        rating_value = form.cleaned_data['rating']
-
-        rating, created = Rating.objects.update_or_create(
-            user=self.request.user,
-            to_movie=movie,
-            defaults={'rating': rating_value}
-        )
-
-        return redirect('movie-details', pk=movie.pk)
+        return self.get(request, *args, **kwargs)
 
 
 class Catalogue(ListView):
@@ -137,4 +125,3 @@ def approve_movies(request, pk):
     movie.save()
 
     return redirect(request.META.get('HTTP_REFERER'))
-
