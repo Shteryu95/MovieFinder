@@ -9,7 +9,7 @@ class ActorBaseForm(forms.ModelForm):
         fields = '__all__'
 
         labels = {
-            'full_name': 'Name',
+            'full_name': 'Full Name',
             'all_movies': 'Movies',
         }
 

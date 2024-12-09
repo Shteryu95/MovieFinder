@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h2>Movie Create</h2>
+    <h2 style="color: #ffffff;">Movie Create</h2>
 
-    <form method="post" class="form-group" style="color: black; margin: 50px auto; width: 50%">
+    <form method="post" class="form-group" style="color: black; font-weight: bold;">
 
         {{ form.as_p }}
         {% csrf_token %}

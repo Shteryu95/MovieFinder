@@ -25,4 +25,8 @@ class TestRegisterForm(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn('password2', form.errors)
 
-
+    def test__username_invalid__returns_error_message(self):
+        self.valid_data['username'] = 'asdsad___'
+        form = CustomUserCreationForm(data=self.valid_data)
+        self.assertFalse(form.is_valid())
+        self.assertEqual(["Your username must contain only letters and digits!"], form["username"].errors)

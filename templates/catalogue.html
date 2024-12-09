@@ -4,7 +4,7 @@
 
     <div>
 
-        <form style="display: flex; justify-content: center; align-items: center; margin-top: -10px;">
+        <form style="display: flex; justify-content: center; align-items: center; margin-top: -50px;">
 
             {{ search_form }}
             <button
@@ -35,10 +35,10 @@
 
 
 
-            <ul style="list-style: none; padding: 0; margin: 40px; display: flex; justify-content: center; align-items: center; gap: 10px; color: black">
+            <ul style="list-style: none; padding: 0; margin: 40px; display: flex; justify-content: center; align-items: center; gap: 50px; color: black">
 
                 {% for movie in all_movies %}
-                    <li>
+                    <li style="">
 
                         <h3>{{ movie.name }}</h3>
                         <img src="{{ movie.poster }}" alt=""

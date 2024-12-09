@@ -11,7 +11,7 @@ Project setup
 1. Clone the repo
 
 2. Open the project
-3. 
+
 3. Install dependencies
 
   pip install -r requirements.txt

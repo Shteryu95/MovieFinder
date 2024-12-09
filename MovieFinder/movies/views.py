@@ -1,12 +1,15 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage, InvalidPage
 from django.db.models import Q
-from django.shortcuts import redirect
-from django.urls import reverse_lazy
+from django.http import Http404
+from django.shortcuts import redirect, get_object_or_404, render
+from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 
 from MovieFinder.common.forms import RatingForm
-from MovieFinder.common.models import Rating
+from MovieFinder.common.models import Rating, Comment
 from MovieFinder.movies.forms import CreateMovie, EditMovie, DeleteMovie, SearchForm, CommentForm
 from MovieFinder.movies.models import Movie
 
@@ -97,12 +100,13 @@ class Catalogue(ListView):
     model = Movie
     context_object_name = 'all_movies'
     template_name = 'catalogue.html'
-    paginate_by = 3
+    paginate_by = 4
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         context['search_form'] = SearchForm(self.request.GET)
+
         return context
 
     def get_queryset(self):
@@ -125,3 +129,16 @@ def approve_movies(request, pk):
     movie.save()
 
     return redirect(request.META.get('HTTP_REFERER'))
+
+
+@login_required
+def delete_comment(request, comment_pk):
+    comment = get_object_or_404(Comment, pk=comment_pk)
+
+    movie = comment.movie
+    comment.delete()
+
+    return redirect('movie-details', pk=movie.pk)
+
+
+

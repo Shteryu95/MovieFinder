@@ -4,7 +4,7 @@
     
     <h2>Edit Movie Information</h2>
     {% if request.user.is_staff %}
-    <form method="post" style="color: black">
+    <form method="post" style="color: black; font-weight: bold">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn btn-success">Edit</button>

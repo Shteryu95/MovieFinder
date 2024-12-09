@@ -33,6 +33,10 @@ class Movie(models.Model):
 
     approved = models.BooleanField(default=False)
 
+    def save(self, *args, **kwargs):
+        self.name = self.name.capitalize()
+        super(Movie, self).save(*args, **kwargs)
+
     class Meta:
         ordering = ['name', ]
         permissions = [

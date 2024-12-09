@@ -3,7 +3,8 @@
 
 {% block content %}
 
-    <h1>{{ movie.name }}</h1>
+
+    <h1 style="margin-top: -50px">{{ movie.name }}</h1>
 
     <div>
 
@@ -22,7 +23,7 @@
         <div>
 
             {% if movie.trailer_id %}
-                <div style="position: absolute; top: 180px; left: 350px;">
+                <div style="position: absolute; top: 120px; left: 350px;">
                     <iframe width="600" height="330"
                             src="https://www.youtube.com/embed/{{ movie.trailer_id }}"
                             frameborder="0"
@@ -46,7 +47,7 @@
 
         <div>
 
-            <div style="position: absolute; top: 180px; left: 1100px; color: black">
+            <div style="position: absolute; top: 120px; left: 1100px; color: black">
 
                 {% if user.is_authenticated %}
                     {% if user_rating %}
@@ -75,7 +76,7 @@
             </div>
 
 
-            <div style="position: absolute; bottom: 230px; right: 420px; color: black">
+            <div style="position: absolute; bottom: 280px; right: 420px; color: black">
 
                 <h2>Leave a Comment</h2>
                 {% if user.is_authenticated %}
@@ -93,7 +94,7 @@
         </div>
 
 
-        <div style="position: absolute; bottom: 220px; right: 10px; color: white; width: 300px; word-wrap: break-word; line-height: 1.5; max-height: 550px; overflow-y: auto;">
+        <div style="position: absolute; bottom: 250px; right: 10px; color: white; width: 300px; word-wrap: break-word; line-height: 1.5; max-height: 550px; overflow-y: auto;">
 
             {% for comment in movie.comments.all %}
 
@@ -112,6 +113,9 @@
                         <p style="font-size: 12px; color: #777;">{{ comment.created_at }}</p>
                     </div>
                     <p style="font-size: 14px; color: #555;">{{ comment.text }}</p>
+                    {% if comment.user == request.user or request.user.is_staff %}
+                        <a href="{% url 'comment_delete' comment_pk=comment.pk %}" class="btn btn-danger">Delete</a>
+                    {% endif %}
                 </div>
 
             {% empty %}
@@ -122,7 +126,7 @@
 
     </div>
 
-    <div style="position: absolute; bottom: 150px; left: 900px;">
+    <div style="position: absolute; bottom: 200px; left: 900px;">
 
         {% if request.user.is_staff or request.user.is_superuser %}
             <a type="submit" class="btn btn-success" href="{% url 'movie-edit' movie.pk %}">Edit Movie</a>

@@ -46,10 +46,8 @@ class ActorDetailsView(LoginRequiredMixin, DetailView):
     template_name = 'actor-details.html'
 
     def get_context_data(self, **kwargs):
-        # Get the base context
         context = super().get_context_data(**kwargs)
-        # Add the related actors to the context
-        context['movies'] = self.object.all_movies  # Access related actors
+        context['movies'] = self.object.all_movies
         return context
 
 
@@ -57,7 +55,7 @@ class Catalogue(ListView):
     model = Actor
     context_object_name = 'all_actors'
     template_name = 'actor-catalogue.html'
-    paginate_by = 4
+    paginate_by = 3
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

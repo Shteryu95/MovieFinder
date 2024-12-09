@@ -3,11 +3,11 @@
 {% block content %}
 
 
-    <h2>Actor Create</h2>
-
+    <h2 style="color:black; padding-top: 10px">Actor Create</h2>
+    <br>
     {% if user.is_staff %}
 
-        <form method="post" class="form-group" style="color: black; margin: 100px auto; width: 50%">
+        <form method="post" class="form-group" style="color: black; font-weight: bold; padding-top: 20px">
 
             {{ form.as_p }}
             {% csrf_token %}

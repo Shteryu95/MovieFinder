@@ -13,3 +13,14 @@ class TestUserModel(TestCase):
         )
 
         self.assertEqual(str(user), 'kiril')
+
+    def test__valid_str_method__profile(self):
+        user = UserModel.objects.create_user(
+            username='gosho',
+            password='asdqwezxfc',
+        )
+
+        user.profile.first_name = 'georgi'
+        user.profile.last_name = 'kolev'
+
+        self.assertEqual(str(user.profile), 'georgi kolev')

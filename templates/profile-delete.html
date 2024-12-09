@@ -4,7 +4,7 @@
     <form method="post">
         {% csrf_token %}
         <h2>Are you sure you want to delete your profile ?</h2>
-    <button type="submit">Yes</button>
-    <a href="{% url 'profile' request.user.pk %}">Cancel</a>
+    <button type="submit" class="btn btn-success">Yes</button>
+    <a type="submit" class="btn btn-danger" href="{% url 'profile' request.user.pk %}">Cancel</a>
     </form>
 {% endblock %}
