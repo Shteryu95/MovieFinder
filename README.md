@@ -5,23 +5,18 @@ before which you can find out a little more about the movie from the description
 You can see the ratings of each movie, as well as rate it yourself after watching it. 
 You also have the opportunity to write a comment or see the opinions of others.
 
+Worked on resolution 1920 x 1080
 
 Project setup
 
-1. Clone the repo
+1. Clone the repo - https://github.com/Shteryu95/MovieFinder.git
 
 2. Open the project
 
-3. Install dependencies
-
-  pip install -r requirements.txt
+3. Install dependencies - pip install -r requirements.txt
 
 4. Change DB settings in settings.py
 
-5. Run the migrations
+5. Run the migrations - python manage.py migrate
 
-  python manage.py migrate
-
-6. Run the project
-
-  python manage.py runserver
+6. Run the project - python manage.py runserver
